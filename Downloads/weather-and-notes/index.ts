@@ -74,6 +74,6 @@ function saveUserLog(userName: string, userEmail: string, callback: (error: Erro
 fetchUserId((error, userId) =>{
     if(error){
         console.error("error fetching userI", error.message)
-        return;
+        return
     }
 })
