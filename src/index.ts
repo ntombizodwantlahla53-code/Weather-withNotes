@@ -141,17 +141,30 @@ function promiseSaveUserLog(userName: string, userEmail:string): Promise<string>
     })
 }
 
-promiseFetchUserId().then((userId) => {
-    return promiseFetchUserDetails(userId)
-}).then((details) => {
-    return promiseSaveUserLog(details.name, details.email)
-}).then((logStatus) =>{
-    console.log("all operations completed successfully")
-    console.log("final status:", logStatus)
-}).catch((error) =>{
-    console.error("An error occured in the promise chain:", error.message)
-})
+// promiseFetchUserId().then((userId) => {
+//     return promiseFetchUserDetails(userId)
+// }).then((details) => {
+//     return promiseSaveUserLog(details.name, details.email)
+// }).then((logStatus) =>{
+//     console.log("all operations completed successfully")
+//     console.log("final status:", logStatus)
+// }).catch((error) =>{
+//     console.error("An error occured in the promise chain:", error.message)
+// })
 
-async function name(params: type){
-    await 
+
+
+async function processUserData(): Promise<void>{
+    try{
+        console.log("starting async process");
+        const userId = await promiseFetchUserId()
+        const details = await promiseFetchUserDetails(userId)
+        const logStatus = await promiseSaveUserLog(details.name, details.email);
+        console.log("all operations completed successfully")
+        console.log("final status:", logStatus)
+    }catch (error: any){
+        console.error("an error occured in this process:", error.message);
+
+    }
 }
+processUserData();
