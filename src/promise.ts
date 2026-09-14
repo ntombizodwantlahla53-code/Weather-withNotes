@@ -1,59 +1,75 @@
-function promiseFetchUserId(): Promise<string>{
-    console.log("fetching user id")
-    return new Promise((resolve,reject) =>{
-        setTimeout(() =>{
-            const userId = "user123";
-            // if(err){
-            //     return reject(new Error("failed top fetch user id"))
-            // }
-            resolve(userId);
-        },1000)
+import https from "https";
+
+const latitude = -29.6006;
+const longitude = 30.3794;
+
+function fetchWeather(): Promise<any> {
+    return new Promise((resolve, reject) => {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code`;
+
+        https.get(url, (response) => {
+            let data = "";
+            response.on("data", (chunk) => {
+                data += chunk;
+            });
+            response.on("end", () => {
+                try {
+                    resolve(JSON.parse(data));
+                } catch {
+                    reject(new Error("Error processing weather data"));
+                }
+            });
+        }).on("error", reject);
+    });
+}
+function fetchNews(): Promise<any> {
+    return new Promise((resolve, reject) => {
+        https.get("https://dummyjson.com/posts?limit=5", (response) => {
+            let data = "";
+            response.on("data", (chunk) => {
+                data += chunk;
+            });
+            response.on("end", () => {
+                try {
+                    resolve(JSON.parse(data));
+                } catch {
+                    reject(new Error("Error processing news data"));
+                }
+            });
+        }).on("error", reject);
+    });
+}
+//chain
+fetchWeather()
+    .then((weather) => {
+        console.log("\nLocation: Pietermaritzburg");
+        console.log("Temperature:", weather.current.temperature_2m, "°C");
+        console.log("Humidity:", weather.current.relative_humidity_2m, "%");
+
+        return fetchNews();
     })
-}
+    .then((news) => {
+        console.log("\nLatest News Headlines:");
 
-function promiseFetchUserDetails(userId: string): Promise<{name: string; email:string}>{
-console.log(`fetching details for userId: ${userId}`);
- return new Promise((resolve,reject) => {
-    setTimeout(() =>{
-        const details = {name: "propropro", email: "promise@gmail.com"}
-        resolve(details)
-    },2000)
- })
-}
-
-function promiseSaveUserLog(userName: string, userEmail:string): Promise<string>{
-    console.log(`Saving user log for ${userName} ,email: ${userEmail}`);
-    return new Promise((resolve,reject) =>{
-        setTimeout(() =>{
-            const status = "Log Saved succesfully"
-            resolve(status)
-        },2000)
+        news.posts.forEach((post: any) => {
+            console.log("-", post.title);
+        });
     })
-}
-
-// promiseFetchUserId().then((userId) => {
-//     return promiseFetchUserDetails(userId)
-// }).then((details) => {
-//     return promiseSaveUserLog(details.name, details.email)
-// }).then((logStatus) =>{
-//     console.log("all operations completed successfully")
-//     console.log("final status:", logStatus)
-// }).catch((error) =>{
-//     console.error("An error occured in the promise chain:", error.message)
-// })
-
-
-async function processUserData(): Promise<void>{
-    try{
-        console.log("starting async process");
-        const userId = await promiseFetchUserId()
-        const details = await promiseFetchUserDetails(userId)
-        const logStatus = await promiseSaveUserLog(details.name, details.email);
-        console.log("all operations completed successfully")
-        console.log("final status:", logStatus)
-    }catch (error: any){
-        console.error("an error occured in this process:", error.message);
-
-    }
-}
-processUserData();
+    .catch((error) => {
+        console.error(error.message);
+    });
+//all
+Promise.all([fetchWeather(), fetchNews()])
+    .then(() => {
+        console.log("\nPromise.all: Weather and news fetched.");
+    })
+    .catch((error) => {
+        console.error(error.message);
+    });
+Promise.race([fetchWeather(), fetchNews()])
+    .then(() => {
+        console.log("Promise.race: First request finished.");
+    })
+    .catch((error) => {
+        console.error(error.message);
+    });
