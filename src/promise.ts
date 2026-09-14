@@ -45,12 +45,10 @@ fetchWeather()
         console.log("\nLocation: Pietermaritzburg");
         console.log("Temperature:", weather.current.temperature_2m, "°C");
         console.log("Humidity:", weather.current.relative_humidity_2m, "%");
-
         return fetchNews();
     })
     .then((news) => {
         console.log("\nLatest News Headlines:");
-
         news.posts.forEach((post: any) => {
             console.log("-", post.title);
         });
@@ -61,14 +59,14 @@ fetchWeather()
 //all
 Promise.all([fetchWeather(), fetchNews()])
     .then(() => {
-        console.log("\nPromise.all: Weather and news fetched.");
+        console.log("\nPromise.all: Weather and news fetched");
     })
     .catch((error) => {
         console.error(error.message);
     });
 Promise.race([fetchWeather(), fetchNews()])
     .then(() => {
-        console.log("Promise.race: First request finished.");
+        console.log("Promise.race: First request isfinished");
     })
     .catch((error) => {
         console.error(error.message);
