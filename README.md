@@ -12,6 +12,7 @@
 ```
 
 # Run App
+```bash
 npm install
 # or
 yarn install
@@ -19,5 +20,5 @@ yarn install
 npm run callback
 npm run promise
 npm run async
-
+```
 # Tech Stack
