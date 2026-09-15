@@ -6,7 +6,7 @@ const longitude = 30.3794;
 function fetchWeather(
     callback: (error: Error | null, weather?: any) => void
 ) {
-    console.log("Fetching weather...");
+    console.log("Fetching weather ..loading...");
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code`;
 
     https.get(url, (response) => {
@@ -18,7 +18,7 @@ function fetchWeather(
             try {
                 callback(null, JSON.parse(data));
             } catch {
-                callback(new Error("Error processing weather data"));
+                callback(new Error("Error in processing weather data"));
             }
         });
     }).on("error", (error) => {
@@ -29,8 +29,8 @@ function fetchWeather(
 function fetchNews(
     callback: (error: Error | null, news?: any) => void
 ) {
-    console.log("Fetching latest news...");
-    https.get("https://dummyjson.com/posts?limit=5", (response) => {
+    console.log("Fetching latest news...Loaading...");
+    https.get("https://dummyjson.com/posts?limit=6", (response) => {
         let data = "";
 
         response.on("data", (chunk) => {
@@ -63,7 +63,7 @@ fetchNews((error, news) => {
             return;
         }
         setTimeout(() =>{
-        console.log("\nLatest News Headlines:");
+        console.log("\nLatest News:");
         news.posts.forEach((post: any) => {
             console.log("-", post.title);
         },3000);

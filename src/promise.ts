@@ -16,7 +16,7 @@ function fetchWeather(): Promise<any> {
                 try {
                     resolve(JSON.parse(data));
                 } catch {
-                    reject(new Error("Error processing weather data"));
+                    reject(new Error("theres error in processing weather data"));
                 }
             });
         }).on("error", reject);
@@ -24,7 +24,7 @@ function fetchWeather(): Promise<any> {
 }
 function fetchNews(): Promise<any> {
     return new Promise((resolve, reject) => {
-        https.get("https://dummyjson.com/posts?limit=5", (response) => {
+        https.get("https://dummyjson.com/posts?limit=6", (response) => {
             let data = "";
             response.on("data", (chunk) => {
                 data += chunk;
@@ -33,7 +33,7 @@ function fetchNews(): Promise<any> {
                 try {
                     resolve(JSON.parse(data));
                 } catch {
-                    reject(new Error("Error processing news data"));
+                    reject(new Error("error in processing news data"));
                 }
             });
         }).on("error", reject);
@@ -48,7 +48,7 @@ fetchWeather()
         return fetchNews();
     })
     .then((news) => {
-        console.log("\nLatest News Headlines:");
+        console.log("\nLatest News:");
         news.posts.forEach((post: any) => {
             console.log("-", post.title);
         });
@@ -58,7 +58,7 @@ fetchWeather()
     });
 Promise.all([fetchWeather(), fetchNews()])
     .then(() => {
-        console.log("\nPromise.all: Weather and news fetched");
+        console.log("\nPromise.all: Weather and news are fetched");
     })
     .catch((error) => {
         console.error(error.message);
