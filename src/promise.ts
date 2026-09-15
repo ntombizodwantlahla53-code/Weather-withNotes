@@ -39,7 +39,7 @@ function fetchNews(): Promise<any> {
         }).on("error", reject);
     });
 }
-//chain
+
 fetchWeather()
     .then((weather) => {
         console.log("\nLocation: Pietermaritzburg");
@@ -56,7 +56,6 @@ fetchWeather()
     .catch((error) => {
         console.error(error.message);
     });
-//all
 Promise.all([fetchWeather(), fetchNews()])
     .then(() => {
         console.log("\nPromise.all: Weather and news fetched");

@@ -30,7 +30,6 @@ function fetchNews(
     callback: (error: Error | null, news?: any) => void
 ) {
     console.log("Fetching latest news...");
-
     https.get("https://dummyjson.com/posts?limit=5", (response) => {
         let data = "";
 
@@ -48,25 +47,26 @@ function fetchNews(
         callback(error);
     });
 }
-
 fetchWeather((error, weather) => {
     if (error) {
         console.error(error.message);
         return;
     }
+    setTimeout(() =>{
     console.log("\nLocation: Pietermaritzburg");
     console.log("Temperature:", weather.current.temperature_2m, "°C");
     console.log("Humidity:", weather.current.relative_humidity_2m, "%");
-
-    fetchNews((error, news) => {
+    },3000);
+fetchNews((error, news) => {
         if (error) {
             console.error(error.message);
             return;
         }
+        setTimeout(() =>{
         console.log("\nLatest News Headlines:");
-
         news.posts.forEach((post: any) => {
             console.log("-", post.title);
+        },3000);
         });
     });
 });
