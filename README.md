@@ -4,11 +4,13 @@
 <img src="https://socialify.git.ci/ntombizodwantlahla53-code/Weather-withNotes/image?language=1&owner=1&name=1&stargazers=1&theme=Light" alt="Weather-withNotes" width="640" height="320" />
 
 # Project Description
-```This project simulates or connects to external APIs to retrieve weather details for a specific location (Pietermaritzburg) alongside a list of recent news notes or headlines. It serves as a practical comparison of how asynchronous control flow has evolved , showcasing:Callback nesting and sequential loading states.Promise methods like Promise.race() and Promise.all() to manage concurrent execution.Async/Await for writing asynchronous code that looks and behaves like synchronous code.
+```
+This project simulates or connects to external APIs to retrieve weather details for a specific location (Pietermaritzburg) alongside a list of recent news notes or headlines. It serves as a practical comparison of how asynchronous control flow has evolved , showcasing:Callback nesting and sequential loading states.Promise methods like Promise.race() and Promise.all() to manage concurrent execution.Async/Await for writing asynchronous code that looks and behaves like synchronous code.
 ```
 
 # Installation and Set-up
-```git clone https://github.com/ntombizodwantlahla53-code/Weather-withNotes.git
+```
+git clone https://github.com/ntombizodwantlahla53-code/Weather-withNotes.git
 cd Weather-withNotes
 ```
 
